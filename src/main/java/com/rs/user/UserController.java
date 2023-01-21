@@ -2,6 +2,7 @@ package com.rs.user;
 
 
 import com.rs.jwt.JwtTokenUtility;
+import com.rs.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,14 +26,17 @@ public class UserController {
     @Autowired UserInfoRepository userInfoRepository;
 
     @PostMapping("login")
-    public ResponseEntity<LoginResponse>login(@RequestBody LoginInfo loginInfo ){
-        Authentication authentication = authenticationManager.authenticate(
+    public ResponseEntity<LoginResponse>login(@RequestBody LoginInfo loginInfo)
+    {
+        Authentication authentication = authenticationManager.authenticate
+                (
                 new UsernamePasswordAuthenticationToken(loginInfo.getUsername(), loginInfo.getPassword())
         );
         UserInfo user = (UserInfo) authentication.getPrincipal();
         String accessToken = jwtTokenUtility.generateAccessToken(user);
-        LoginResponse loginResponse = new LoginResponse(user.getUsername(), accessToken);
-        return ResponseEntity.ok(loginResponse);
+        String role = user.getRoles().toArray()[0].toString();
+        LoginResponse loginResponse = new LoginResponse(user.getUsername(), accessToken, role);
+        return ResponseEntity.ok().body(loginResponse);
     }
 
     @PostMapping("registrasi")
@@ -42,6 +46,7 @@ public class UserController {
         userInfo.setPassword(passwordEncoder.encode(registrationInfo.getPassword()));
         userInfo.setAddress(registrationInfo.getAddress());
         userInfo.setName(registrationInfo.getName());
+        userInfo.addRole(new Role(2));
         userInfoRepository.save(userInfo);
         return ResponseEntity.ok().build();
     }

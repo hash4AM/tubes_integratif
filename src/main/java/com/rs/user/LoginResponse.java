@@ -1,14 +1,28 @@
 package com.rs.user;
 
-public class LoginResponse {
+public class LoginResponse
+{
     private String username;
     private String accessToken;
-    public LoginResponse() {
+
+    private String role;
+    public LoginResponse()
+    {
     }
 
-    public LoginResponse(String username, String accessToken) {
+    public LoginResponse(String username, String accessToken, String role)
+    {
         this.username = username;
         this.accessToken = accessToken;
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getUsername() {

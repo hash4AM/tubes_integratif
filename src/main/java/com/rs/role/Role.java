@@ -18,6 +18,11 @@ public class Role {
         this.name = name;
     }
 
+    public Role(Integer id)
+    {
+        this.Id = id;
+    }
+
     public Integer getId() {
         return Id;
     }

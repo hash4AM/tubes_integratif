@@ -9,11 +9,11 @@ import javax.validation.constraints.Pattern;
 public class RegistrationInfo {
     @NotNull
     @Length(min = 5, max = 16)
-    @Pattern(regexp = "^([a-zA-Z0-9]+)$")
+    //@Pattern(regexp = "^([a-zA-Z0-9]+)$")
     private String username;
 
     @NotNull
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*\\u0021|.*\\u0040|.*\\u0023|.*\\u005F)(.*)$")
+    //@Pattern(regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*\\u0021|.*\\u0040|.*\\u0023|.*\\u005F)(.*)$")
     @Length(min = 8, max = 16)
     private String password;
 
