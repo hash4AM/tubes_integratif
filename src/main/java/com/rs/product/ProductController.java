@@ -23,13 +23,13 @@ public class ProductController {
     private ProductRepository productRepository;
 
     @GetMapping("/list")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_CUSTOMER"})
+    //@RolesAllowed({"ROLE_ADMIN", "ROLE_CUSTOMER"})
     public List<Product> listAll() {
         return productRepository.findAll();
     }
 
     @PostMapping("/create")
-    @RolesAllowed("ROLE_ADMIN")
+    //@RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<Product> createNewProduct(@RequestBody @Valid Product newProductData)
     {
         Product savedProduct = productRepository.save(newProductData);
@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @PutMapping("/update/{id}")
-    @RolesAllowed("ROLE_ADMIN")
+    //@RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer id, @RequestBody Product updatedProductData) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not exist with id: " +id));
         product.setName(updatedProductData.getName());
@@ -56,7 +56,7 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_CUSTOMER"})
+    //@RolesAllowed({"ROLE_ADMIN", "ROLE_CUSTOMER"})
     public ResponseEntity<Optional<Product>> Id(@PathVariable("id") Integer id) {
         if (productRepository.findById(id).isPresent()) {
             return ResponseEntity.ok(productRepository.findById(id));
@@ -65,7 +65,7 @@ public class ProductController {
     }
 
     @GetMapping("/name/{name}")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_CUSTOMER"})
+    //@RolesAllowed({"ROLE_ADMIN", "ROLE_CUSTOMER"})
     public ResponseEntity<Optional<Product>> Name(@PathVariable("name") String name) {
         if (productRepository.findByName(name).isPresent()) {
             return ResponseEntity.ok(productRepository.findByName(name));
